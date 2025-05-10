@@ -38,91 +38,78 @@ Publish the website in the given URL.
 ## PROGRAM :
 
 ```
-<!DOCTYPE html>
-<html lang="en">
+power.html 
+
+<html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Surface Area of Right Cylinder - HARIHARAN A (212223110013)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>POWER OF LAMP IN INCANDESCENT BULD</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style type="text/css">
         body {
-            background-color: rgb(11, 210, 228);
-            font-family: Arial, sans-serif;
+            background-color:white;
         }
+
         .edge {
-            width: 100%;
-            max-width: 1440px;
-            margin: 0 auto;
-            padding-top: 100px;
             display: flex;
+            height: 100vh;
+            width: 100%;    
             justify-content: center;
             align-items: center;
-            flex-direction: column;
         }
+
         .box {
             display: block;
-            border: thick dashed rgb(8, 6, 17);
             width: 500px;
             min-height: 300px;
-            padding: 20px;
-            background-color: rgb(209, 20, 42);
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 20px;
+            background: rgb(21, 208, 215);
+            background: linear-gradient(90deg, rgb(99, 237, 118) 9%, rgb(193, 166, 202) 56%);
             border-radius: 10px;
+            box-shadow: rgba(239, 5, 24, 0.35) 0px 5px 15px;
         }
+
         .formelt {
-            color: rgb(1, 18, 17);
+            color: whitesmoke;
             text-align: center;
-            margin: 15px 0;
+            margin-top: 7px;
+            margin-bottom: 6px;
         }
+
         h1 {
-            color: rgb(17, 232, 239);
+            color: white;
             text-align: center;
-            margin-bottom: 20px;
+            padding-top: 20px;
         }
-        input[type="text"] {
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            width: 80%;
-            border: none;
+        input{
+            margin: 5px;
+            padding: 5px;
             border-radius: 5px;
-        }
-        input[type="submit"] {
-            padding: 10px 20px;
-            background-color: rgb(17, 232, 239);
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        input[type="submit"]:hover {
-            background-color: rgb(12, 200, 210);
+
         }
     </style>
 </head>
+
 <body>
     <div class="edge">
         <div class="box">
-            <h1>Surface Area of Right Cylinder</h1>
-            <p style="text-align:center; font-weight:bold;">HARIHARAN A (212223110013)</p>
+            <h1>POWER OF LAMP IN INCANDESCENT BULB</h1>
             <form method="POST">
                 {% csrf_token %}
                 <div class="formelt">
-                    Radius: <br/>
-                    <input type="text" name="radius" value="{{ r }}"> (in m)
+                    INTENSITY : <input type="text" name="Intensity" value="{{I}}"></input>(in A)<br />
                 </div>
                 <div class="formelt">
-                    Height: <br/>
-                    <input type="text" name="height" value="{{ h }}"> (in m)
+                    RESISITANCE : <input type="text" name="Resistence" value="{{R}}"></input>(in Ω)<br />
                 </div>
                 <div class="formelt">
-                    <input type="submit" value="Calculate">
+                    <input type="submit" value="Calculate"></input><br />
                 </div>
                 <div class="formelt">
-                    Area: <br/>
-                    <input type="text" name="area" value="{{ area }}"> m<sup>2</sup>
+                    POWER : <input type="text" name="Power" value="{{Power}}"></input>W<br />
                 </div>
             </form>
         </div>
@@ -130,36 +117,41 @@ Publish the website in the given URL.
 </body>
 </html>
 
-```
-```
+views.py 
+
 from django.shortcuts import render
-def surfacearea(request):
+
+def powerlamp(request):
     context={}
-    context['area'] = "0"
-    context['r'] = "0"
-    context['h'] = "0"
+    context['Power'] = ""
+    context['I'] = ""
+    context['R'] = ""
     if request.method == 'POST':
         print("POST method is used")
-        r = request.POST.get('radius','0')
-        h = request.POST.get('height','0')
+        I = request.POST.get('Intensity','')
+        R = request.POST.get('Resistence','')
         print('request=',request)
-        print('radius=',r)
-        print('height=',h)
-        area = 2 * 3.14 * int(r) * int(h) + 2 * 3.14 * int(r) * int(r)
-        context['area'] = area
-        context['r'] = r
-        context['h'] = h
-        print('Area=',area)
-    return render(request,'mathapp/ nameofyourhtml .html',context)
-```
-```
+        print('Intensity=',I)
+        print('Resistence=',R)
+        Power = int(I) * int(I) * int(R)
+        context['Power'] = Power
+        context['I'] = I
+        context['R'] = R
+        print('Power=',Power)
+    return render(request,'side/calci.html',context)
+
+
+
+
+urls.py
+
 from django.contrib import admin
 from django.urls import path
-from mathapp import views
+from side import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('surfaceareaofcylinder/',views.surfacearea,name="surfaceareaofcylinder"),
-    path('',views.surfacearea,name="surfaceareaofcylinderroot")
+    path('PowerOfLampFilamentInAnIncandescentBulb/',views.powerlamp,name="PowerOfLampFilamentInAnIncandescentBulb"),
+    path('',views.powerlamp,name="PowerOfLampFilamentInAnIncandescentBulb"),
 ]
 ```
 
@@ -169,7 +161,7 @@ urlpatterns = [
 
 ## HOMEPAGE:
 
-![image](https://github.com/user-attachments/assets/1c7fd0c6-c14f-45db-82d2-18987140e2b4)
+![WhatsApp Image 2025-05-10 at 12 53 26_58603b61](https://github.com/user-attachments/assets/7dea8b2a-b567-42f5-8133-c824eceba497)
 
 ## RESULT:
 The program for performing server side processing is completed successfully.
